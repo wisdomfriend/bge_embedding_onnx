@@ -1,0 +1,30 @@
+version: '3.8'
+
+services:
+  bge-embedding:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: bge-embedding-service
+    ports:
+      - "${BGE_PORT:-8080}:8080"
+    environment:
+      - BGE_HOST=0.0.0.0
+      - BGE_PORT=8080
+      - BGE_MODEL_PATH=/app/models/bge-large-zh-v1.5.onnx
+      - BGE_TOKENIZER_PATH=/app/models/bge-large-zh-v1.5
+      - BGE_WORKERS=1
+      - BGE_MAX_BATCH_SIZE=32
+      - BGE_MAX_BATCH_SIZE_ALL=256
+      - BGE_LOG_LEVEL=INFO
+    volumes:
+      - ./models:/app/models:ro
+      - ./logs:/app/logs
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "python", "-c", "import requests; requests.get('http://localhost:8080/health', timeout=5)"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+

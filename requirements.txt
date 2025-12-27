@@ -1,0 +1,29 @@
+# BGE Embedding ONNX FastAPI Service Dependencies
+
+# Core ML Framework
+onnxruntime==1.20.1
+torch>=2.0.0
+transformers>=4.30.0
+
+# Web Framework
+fastapi==0.115.7
+uvicorn[standard]==0.40.0
+
+# Production WSGI Server
+gunicorn==21.2.0
+
+# Data Processing
+pydantic==2.9.2
+numpy==1.26.4
+
+# Token Processing
+tiktoken>=0.5.0
+
+# Utilities
+python-dotenv>=1.0.0
+
+# Testing
+requests==2.32.3
+pytest>=7.4.0
+pytest-asyncio>=0.21.0
+
